@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MobilParkolás</string>
+
+    <!-- Navigation / screen titles -->
+    <string name="title_home">Parkolás</string>
+    <string name="title_confirm">Indítás megerősítése</string>
+    <string name="title_active">Folyamatban lévő parkolás</string>
+    <string name="title_cars">Autók</string>
+    <string name="title_settings">Beállítások</string>
+
+    <!-- Common -->
+    <string name="action_start_parking">Parkolás indítása</string>
+    <string name="action_stop_parking">Parkolás leállítása</string>
+    <string name="action_send_sms">SMS megnyitása</string>
+    <string name="action_navigate_here">Navigálj oda</string>
+
+    <!-- Warnings -->
+    <string name="warn_free_now">Most ingyenes a parkolás. Ha most küldöd az SMS-t, a parkolás csak %1$s-kor indul.</string>
+    <string name="warn_max_duration">A maximális várakozási idő helyi rendelet szerint általában 3 óra (néhol 4). Ellenőrizd a zónamatricán!</string>
+
+    <!-- Notification -->
+    <string name="notif_channel_parking">Folyamatban lévő parkolás</string>
+    <string name="notif_parking_title">Parkolás folyamatban</string>
+
+    <!-- Widget -->
+    <string name="widget_quick_park">Gyors parkolás</string>
+</resources>
