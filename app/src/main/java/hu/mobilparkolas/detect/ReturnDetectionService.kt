@@ -67,12 +67,10 @@ class ReturnDetectionService : Service() {
         startedAt = session.startedAt
         watched = locator.carDeviceStore.watchedAddresses()
 
-        val settings = runBlocking { locator.settingsRepository.settings.first() }
-        val stopPlan = SmsComposer.stopSms(settings.smsMode, session.zoneCode, session.plate, settings.provider)
         ServiceCompat.startForeground(
             this,
             ParkingNotifier.NOTIF_ID,
-            locator.parkingNotifier.buildOngoingNotification(session, stopPlan),
+            locator.parkingNotifier.buildOngoingNotification(session),
             if (android.os.Build.VERSION.SDK_INT >= 34) ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE else 0,
         )
 
@@ -93,9 +91,7 @@ class ReturnDetectionService : Service() {
         val locator = (application as MobilParkolasApp).locator
         scope.launch {
             val session = locator.parkingRepository.getActive() ?: return@launch
-            val settings = locator.settingsRepository.settings.first()
-            val plan = SmsComposer.stopSms(settings.smsMode, session.zoneCode, session.plate, settings.provider)
-            locator.parkingNotifier.showReturnNotification(plan, session)
+            locator.parkingNotifier.showReturnNotification(session)
         }
     }
 

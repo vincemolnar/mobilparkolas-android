@@ -124,8 +124,10 @@ class MainViewModel(private val locator: ServiceLocator) : ViewModel() {
             }
             val hits = zoneRepository.zonesAt(point)
             if (hits.isNotEmpty()) {
-                val fresh = refreshTimetable(hits.first())
-                _selectedId.value = fresh.id
+                val detected = hits.first()
+                // Highlight the detected polygon on the map (id must match the drawn zones).
+                _selectedId.value = detected.id
+                val fresh = refreshTimetable(detected)
                 val status = statusOf(fresh)
                 _sheet.value = SheetState.Zone(fresh, status)
                 maybeAutoQuickPark(fresh, status)
@@ -184,12 +186,7 @@ class MainViewModel(private val locator: ServiceLocator) : ViewModel() {
             parkingRepository.start(
                 start.zone.zoneCode, start.zone.city, start.car.plate, start.where, start.scheduledStart,
             )
-            val session = parkingRepository.getActive()
-            if (session != null) {
-                val settings = settingsRepository.settings.first()
-                val stopPlan = SmsComposer.stopSms(settings.smsMode, session.zoneCode, session.plate, settings.provider)
-                parkingNotifier.showOngoing(session, stopPlan)
-            }
+            parkingRepository.getActive()?.let { parkingNotifier.showOngoing(it) }
             locator.returnDetection.start()
         }
     }
